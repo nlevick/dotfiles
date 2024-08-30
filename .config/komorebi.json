@@ -1,0 +1,121 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.25/schema.json",
+  "app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.yaml",
+  "window_hiding_behaviour": "Cloak",
+  "cross_monitor_move_behaviour": "Insert",
+  "default_workspace_padding": 2,
+  "default_container_padding": 2,
+  "border": true,
+  "border_style": "Square",
+  "border_width": 3,
+  "border_offset": -1,
+  "border_colours": {
+    "single": "#2FA2D6",
+    "stack": "#BB9AF7",
+    "monocle": "#F7768E",
+    "unfocused": "#808080"
+  },
+  "stackbar": {
+    "height": 17,
+    "mode": "OnStack",
+    "label": "Title",
+    "tabs": {
+      "width": 180,
+      "focused_text": "#BB9AF7",
+      "unfocused_text": "#b3b3b3",
+      "background": "#011628"
+    }
+  },
+  "monitors": [
+    {
+      "workspaces": [
+        {
+          "name": "browser",
+          "layout": "BSP",
+          "initial_workspace_rules": [
+            {
+              "id": "firefox.exe",
+              "kind": "Exe"
+            }
+          ]
+        },
+        {
+          "name": "code browser",
+          "layout": "BSP",
+          "initial_workspace_rules": [
+            {
+              "id": "msedge.exe",
+              "kind": "Exe"
+            }
+          ]
+        },
+        {
+          "name": "III",
+          "layout": "BSP"
+        },
+        {
+          "name": "IV",
+          "layout": "BSP"
+        },
+        {
+          "name": "V",
+          "layout": "BSP"
+        },
+        {
+          "name": "VI",
+          "layout": "BSP"
+        },
+        {
+          "name": "VII",
+          "layout": "BSP"
+        }
+      ]
+    },
+    {
+      "workspaces": [
+        {
+          "name": "code",
+          "layout": "BSP",
+          "initial_workspace_rules": [
+            {
+              "id": "WezTerminal",
+              "kind": "Title"
+            }
+          ]
+        },
+        {
+          "name": "comms",
+          "layout": "BSP",
+          "initial_workspace_rules": [
+            {
+              "id": "ms-teams.exe",
+              "kind": "Exe"
+            }
+          ]
+        },
+        {
+          "name": "mail",
+          "layout": "BSP",
+          "initial_workspace_rules": [
+            {
+              "id": "Outlook",
+              "kind": "Title"
+            }
+          ]
+        },
+        {
+          "name": "III",
+          "layout": "BSP"
+        },
+        {
+          "name": "IV",
+          "layout": "Grid"
+        },
+        {
+          "name": "VI",
+          "layout": "BSP"
+        }
+      ]
+    }
+  ]
+}
