@@ -1,4 +1,3 @@
---- wezterm.lua
 --- __      __      _
 --- \ \    / /__ __| |_ ___ _ _ _ __
 ---  \ \/\/ / -_)_ /  _/ -_) '_| '  \
@@ -46,12 +45,13 @@ config.inactive_pane_hsb = {
 }
 
 -- Keys
-config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
 	-- Send C-a when pressing C-a twice
-	{ key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
+	-- { key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
 	{ key = "c", mods = "LEADER", action = act.ActivateCopyMode },
-	{ key = "phys:Space", mods = "LEADER", action = act.ActivateCommandPalette },
+	-- { key = "phys:Space", mods = "LEADER", action = act.ActivateCommandPalette },
+	{ key = "a", mods = "CTRL", action = act.ActivateCommandPalette },
 	{ key = "C", mods = "CTRL", action = act.CopyTo("Clipboard") },
 	{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
 
@@ -75,8 +75,8 @@ config.keys = {
 
 	-- Tab keybindings
 	{ key = "t", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "[", mods = "LEADER", action = act.ActivateTabRelative(-1) },
-	{ key = "]", mods = "LEADER", action = act.ActivateTabRelative(1) },
+	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(1) },
+	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(-1) },
 	{ key = "T", mods = "LEADER", action = act.ShowTabNavigator },
 	{
 		key = "e",
@@ -102,8 +102,8 @@ config.keys = {
 
 	-- Lastly, workspace
 	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
-	{ key = "n", mods = "LEADER", action = act.SwitchWorkspaceRelative(1) },
-	{ key = "b", mods = "LEADER", action = act.SwitchWorkspaceRelative(-1) },
+	{ key = "]", mods = "LEADER", action = act.SwitchWorkspaceRelative(1) },
+	{ key = "[", mods = "LEADER", action = act.SwitchWorkspaceRelative(-1) },
 }
 -- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
 for i = 1, 9 do
@@ -206,7 +206,7 @@ config.tab_bar_at_bottom = true
 -- end)
 
 local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
-bar.apply_to_config(config, { enabled_modules = { username = false, hostname = false } })
+bar.apply_to_config(config, { enabled_modules = { username = false, hostname = true } })
 
 -- and finally, return the configuration to wezterm
 return config
