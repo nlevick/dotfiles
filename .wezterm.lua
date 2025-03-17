@@ -10,33 +10,62 @@ local act = wezterm.action
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
 -- settings
-config.default_prog = { "../../Program Files/Git/bin/bash.exe", "--login" }
+-- config.default_prog = { "../../Program Files/Git/bin/bash.exe", "--login" }
 
 config.font_size = 12
 config.font = wezterm.font_with_fallback({
 	-- { family = "VictorMono Nerd Font Mono", scale = 1.0, weight = "Bold" },
-	{ family = "IosevkaTerm Nerd Font", scale = 1.0, weight = "Medium" },
+	-- { family = "IosevkaTerm Nerd Font", scale = 1.0, weight = "Medium" },
 	-- { family = "Maple Mono", scale = 1.0, weight = "Light" },
 })
 
-config.window_decorations = "RESIZE"
--- config.window_background_opacity = 0.9
--- config.macos_window_background_blur = 30
-config.color_scheme = "Tokyo Night (Gogh)"
+config.color_schemes = {
+	["My Scheme"] = {
+		foreground = "#CBE0F0",
+		background = "#011423",
+		cursor_bg = "#ff0000",
+		cursor_border = "#ff0000",
+		cursor_fg = "#011423",
+		selection_bg = "#033259",
+		selection_fg = "#CBE0F0",
+		ansi = {
+			"#214969",
+			"#E52E2E",
+			"#44FFB1",
+			"#FFE073",
+			"#0FC5ED",
+			"#a277ff",
+			"#24EAF7",
+			"#24EAF7",
+		},
+		brights = {
+			"#214969",
+			"#E52E2E",
+			"#44FFB1",
+			"#FFE073",
+			"#A277FF",
+			"#a277ff",
+			"#24EAF7",
+			"#24EAF7",
+		},
+	},
+}
+
+config.color_scheme = "My Scheme"
+
+-- config.color_scheme = "Tokyo Night (Gogh)"
 -- config.color_scheme = "Rebecca (base16)"
 -- config.color_scheme = "Laserwave (Gogh)"
 -- config.color_scheme = "Lumifoo (terminal.sexy)"
 -- config.color_scheme = "Lunaria Dark (Gogh)"
 -- config.color_scheme = "Jellybeans"
-config.colors = {
-	background = "#011628",
-	cursor_bg = "#ff0000",
-	cursor_border = "#ff0000",
-	foreground = "#eee",
-	-- foreground = "#CBE0F0",
-}
+
+config.window_decorations = "RESIZE"
+-- config.window_background_opacity = 0.9
+-- config.macos_window_background_blur = 30
 
 -- Dim inactive panes
 config.inactive_pane_hsb = {
@@ -134,79 +163,57 @@ config.key_tables = {
 }
 
 -- Tab bar
--- I don't like the look of "fancy" tab bar
-config.use_fancy_tab_bar = false
 config.status_update_interval = 1000
-config.tab_bar_at_bottom = true
+config.tab_bar_at_bottom = false
 
--- wezterm.on("update-status", function(window, pane)
--- 	-- Workspace name
--- 	local stat = window:active_workspace()
--- 	local stat_color = "#e06f88"
--- 	-- It's a little silly to have workspace name all the time
--- 	-- Utilize this to display LDR or current key table name
--- 	if window:active_key_table() then
--- 		stat = window:active_key_table()
--- 		stat_color = "#7dcfff"
--- 	end
--- 	if window:leader_is_active() then
--- 		stat = "LDR"
--- 		stat_color = "#BB9AF7"
--- 	end
---
--- 	local basename = function(s)
--- 		-- Nothing a little regex can't fix
--- 		return string.gsub(s, "(.*[/\\])(.*)", "%2")
--- 	end
---
--- 	-- Current working directory
--- 	local cwd = pane:get_current_working_dir()
--- 	if cwd then
--- 		if type(cwd) == "userdata" then
--- 			-- Wezterm introduced the URL object in 20240127-113634-bbcac864
--- 			cwd = basename(cwd.file_path)
--- 		else
--- 			-- 20230712-072601-f4abf8fd or earlier version
--- 			cwd = basename(cwd)
--- 		end
--- 	else
--- 		cwd = ""
--- 	end
---
--- 	-- Current command
--- 	local cmd = pane:get_foreground_process_name()
--- 	-- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
--- 	cmd = cmd and basename(cmd) or ""
---
--- 	-- Time
--- 	local date = wezterm.strftime("%a %b %d  ")
--- 	local time = wezterm.strftime("%H:%M")
---
--- 	-- Left status (left of the tab line)
--- 	window:set_left_status(wezterm.format({
--- 		{ Foreground = { Color = stat_color } },
--- 		{ Text = "  " },
--- 		{ Text = wezterm.nerdfonts.cod_layers .. "  " .. stat },
--- 		{ Text = " " },
--- 	}))
---
--- 	-- Right status
--- 	window:set_right_status(wezterm.format({
--- 		{ Foreground = { Color = "#22a4be" } },
--- 		-- { Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
--- 		-- { Text = " | " },
--- 		{ Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
--- 		"ResetAttributes",
--- 		{ Foreground = { Color = "#CBE0F0" } },
--- 		{ Text = " | " },
--- 		{ Text = wezterm.nerdfonts.cod_calendar .. "  " .. date },
--- 		{ Text = wezterm.nerdfonts.md_clock .. "  " .. time },
--- 		{ Text = "  " },
--- 	}))
--- end)
+tabline.setup({
+	options = {
+		icons_enabled = true,
+		theme = "Laserwave (Gogh)",
+		tabs_enabled = true,
+		theme_overrides = {
+			normal_mode = {
+				-- a = { fg = "#A277FF", bg = "#033259" },
+				a = { bg = "#A277FF", fg = "#011423" },
+				b = { fg = "#44FFB1", bg = "#011423" },
+				c = { fg = "#CBE0F0", bg = "#011423" },
+			},
+			tab = {
+				active = { fg = "#0FC5ED", bg = "#214969" },
+				inactive = { fg = "#CBE0F0", bg = "#011423" },
+				inactive_hover = { fg = "#FFE073", bg = "#313244" },
+			},
+		},
+		section_separators = {
+			left = wezterm.nerdfonts.pl_left_hard_divider,
+			right = wezterm.nerdfonts.pl_right_hard_divider,
+		},
+		component_separators = {
+			left = wezterm.nerdfonts.pl_left_soft_divider,
+			right = wezterm.nerdfonts.pl_right_soft_divider,
+		},
+		tab_separators = {
+			left = wezterm.nerdfonts.pl_left_hard_divider,
+			right = wezterm.nerdfonts.pl_right_hard_divider,
+		},
+	},
+	sections = {
+		tabline_a = { "workspace" },
+		tabline_b = { " " },
+		tabline_c = { " " },
+		tab_active = {
+			"index",
+			"tab",
+			{ "process", padding = { left = 0, right = 1 } },
+			{ "zoomed", padding = 0 },
+		},
+		tab_inactive = { "index", "tab", { "process", padding = { left = 0, right = 1 } } },
+		tabline_x = { "ram", "cpu" },
+		tabline_y = { "datetime", "battery" },
+		tabline_z = { "" },
+	},
+	extensions = {},
+})
+tabline.apply_to_config(config)
 
-local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
-bar.apply_to_config(config, { enabled_modules = { username = false, hostname = true } })
-
--- and finally, return the configuration to wezterm
 return config
